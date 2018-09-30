@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import {config} from '../../config';
 // import List from './components/List.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      acc: window.s3Access,
-      pass: window.s3Secret,
+      acc: config.acc,
+      pass: config.pass,
       q: 'hello',
       url: 'https://archive.org/metadata/AandDICPAdventure'
     };
@@ -23,25 +24,25 @@ class App extends React.Component {
   }
 
   submit(event) {
-    console.log(typeof this.state.q);
-    $.post({
-      url: this.state.url,
-      data: {
-        '-target': metadata,
-        '-patch': {
-          "add":'/testingthisout',
-          "value": this.state.q
-        },
-        'access': this.state.acc,
-        'secret': this.state.pass
-      }
-    })
-    .done((msg) => {
-      console.log('success!', msg);
-    })
-    .fail((failed) => {
-      console.log('FAIL', fail);
-    })
+    console.log(this.state.acc, this.state.pass);
+    // $.post({
+    //   url: this.state.url,
+    //   data: {
+    //     '-target': metadata,
+    //     '-patch': {
+    //       "add":'/testingthisout',
+    //       "value": this.state.q
+    //     },
+    //     'access': this.state.acc,
+    //     'secret': this.state.pass
+    //   }
+    // })
+    // .done((msg) => {
+    //   console.log('success!', msg);
+    // })
+    // .fail((failed) => {
+    //   console.log('FAIL', fail);
+    // })
   }
 
   render() {
