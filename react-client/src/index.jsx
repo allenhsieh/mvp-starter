@@ -24,25 +24,29 @@ class App extends React.Component {
   }
 
   submit(event) {
-    console.log(this.state.acc, this.state.pass);
-    // $.post({
-    //   url: this.state.url,
-    //   data: {
-    //     '-target': metadata,
-    //     '-patch': {
-    //       "add":'/testingthisout',
-    //       "value": this.state.q
-    //     },
-    //     'access': this.state.acc,
-    //     'secret': this.state.pass
-    //   }
-    // })
-    // .done((msg) => {
-    //   console.log('success!', msg);
-    // })
-    // .fail((failed) => {
-    //   console.log('FAIL', fail);
-    // })
+    console.log(this.state.q, this.state.acc, this.state.pass);
+    $.post({
+      url: this.state.url,
+      crossDomain: true,
+      contentType: 'application/javacript',
+      dataType: 'jsonp',
+      data: {
+        '-target': 'metadata',
+        '-patch': JSON.stringify({
+          "add":'/testingthisout',
+          "value": this.state.q
+        }),
+        'access': this.state.acc,
+        'secret': this.state.pass
+      }
+    })
+    .done((msg) => {
+      console.log('success!', msg);
+    })
+    .fail((failed) => {
+      console.log('FAIL', failed);
+    })
+    event.preventDefault();
   }
 
   render() {
