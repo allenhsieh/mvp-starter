@@ -30,14 +30,16 @@ class App extends React.Component {
       crossDomain: true,
       contentType: 'application/javacript',
       dataType: 'jsonp',
+      headers: {
+        'access': this.state.acc,
+        'secret': this.state.pass
+      },
       data: {
         '-target': 'metadata',
         '-patch': JSON.stringify({
-          "add":'/testingthisout',
+          "add":'/test',
           "value": this.state.q
-        }),
-        'access': this.state.acc,
-        'secret': this.state.pass
+        })
       }
     })
     .done((msg) => {
