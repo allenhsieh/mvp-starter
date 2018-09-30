@@ -11,7 +11,7 @@ class App extends React.Component {
       acc: config.acc,
       pass: config.pass,
       q: 'hello',
-      url: 'https://archive.org/metadata/AandDICPAdventure'
+      url: 'https://archive.org/metadata/allenAPI'
     };
     this.submit = this.submit.bind(this);
     this.change = this.change.bind(this);
