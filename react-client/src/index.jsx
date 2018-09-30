@@ -24,12 +24,11 @@ class App extends React.Component {
   }
 
   submit(event) {
-    console.log(this.state.q, this.state.acc, this.state.pass);
     $.post({
       url: this.state.url,
       crossDomain: true,
-      contentType: 'application/javacript',
       dataType: 'jsonp',
+      contentType: 'application/javacript',
       headers: {
         'access': this.state.acc,
         'secret': this.state.pass
