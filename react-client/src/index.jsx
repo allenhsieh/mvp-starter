@@ -4,26 +4,41 @@ import $ from 'jquery';
 import {config} from '../../config';
 // import List from './components/List.jsx';
 
+const TagList = (props) => {
+
+}
+
+
+
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       acc: config.acc,
       pass: config.pass,
-      q: 'hello',
+      tags: ['city', 'state', 'venue', 'time', 'price', 'fb', 'yt'],
+      city: '',
+      state: '',
+      venue: '',
+      time: '',
+      price: '',
+      fb: '',
+      yt: '',
+      q: [],
       url: 'https://archive.org/metadata/allenAPI'
     };
-    this.submit = this.submit.bind(this);
-    this.change = this.change.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  change(event) {
+  handleChange(event) {
     this.setState({
       q: event.target.value
     });
   }
 
-  submit(event) {
+  handleSubmit(event) {
+
     $.post({
       url: this.state.url,
       crossDomain: true,
@@ -35,10 +50,7 @@ class App extends React.Component {
       },
       data: {
         '-target': 'metadata',
-        '-patch': JSON.stringify({
-          "add":'/test',
-          "value": this.state.q
-        })
+        '-patch': JSON.stringify(q)
       }
     })
     .done((msg) => {
@@ -52,10 +64,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submit}>
+      <form onSubmit={this.handleSubmit}>
         <label>
           test:
-          <input type="text" value={this.state.q} onChange={this.change} />
+          <input type="text" value={this.state.q} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
