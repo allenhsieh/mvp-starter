@@ -8,7 +8,7 @@ const TagItem = (props) => {
   return (
     <div>
       <label>
-        {props.tag[0]}:
+        <button className="remove-tag">✖</button>{props.tag[0]}:
         <input type="text" name={props.tag[0]} value={props.tag[1]} onChange={props.change}/>
       </label>
     </div>
