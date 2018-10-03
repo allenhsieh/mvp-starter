@@ -4,11 +4,20 @@ import $ from 'jquery';
 import {config} from '../../config';
 // import List from './components/List.jsx';
 
-const TagList = (props) => {
+const TagItem = (props) => {
+  return (
+    <label>
+      {props.name}:
+      <input type="text" />
+    </label>
+  );
+
+  <label>
+  test:
+  <input type="text" value={this.state.q} onChange={this.handleChange} />
+</label>
 
 }
-
-
 
 class App extends React.Component {
   constructor() {
@@ -16,7 +25,8 @@ class App extends React.Component {
     this.state = {
       acc: config.acc,
       pass: config.pass,
-      tags: ['city', 'state', 'venue', 'time', 'price', 'fb', 'yt'],
+      activeTags: ['city', 'state', 'venue', 'time', 'price', 'fb', 'yt'],
+      inactiveTags: [],
       city: '',
       state: '',
       venue: '',
@@ -65,10 +75,15 @@ class App extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          test:
-          <input type="text" value={this.state.q} onChange={this.handleChange} />
-        </label>
+        {this.state.activeTags.map(tag => {
+          return (
+            <TagItem
+              onChange={this.handleChange}
+              name={tag}
+              key={tag}
+            />
+          );
+        })}
         <input type="submit" value="Submit" />
       </form>
     )
