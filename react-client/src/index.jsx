@@ -14,11 +14,6 @@ const TagItem = (props) => {
     </div>
   );
 
-//   <label>
-//   test:
-//   <input type="text" value={this.state.q} onChange={this.handleChange} />
-// </label>
-
 }
 
 class App extends React.Component {
@@ -56,7 +51,6 @@ class App extends React.Component {
       //   fb: '',
       //   yt: '',
       // }],
-      q: [],
       url: 'https://archive.org/metadata/allenAPI'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,9 +60,7 @@ class App extends React.Component {
   handleChange(index, event) {
     const target = event.target;
     const value = target.value;
-    const name = target.name;
-    console.log('THIS IS EVENT', value);
-    console.log('THIS IS INDEX', index);
+
     let newTags = [...this.state.activeTags];
     newTags[index][1] = value;
     this.setState({
@@ -77,6 +69,14 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
+    let q = [];
+    this.state.activeTags.forEach(tag => {
+      q.push({
+        add: '/' + tag[0],
+        value: tag[1]
+      });
+    });
+    console.log('Q', q);
 
     $.post({
       url: this.state.url,
@@ -95,8 +95,9 @@ class App extends React.Component {
     .done((msg) => {
       console.log('success!', msg);
     })
-    .fail((failed) => {
-      console.log('FAIL', failed);
+    .fail((jqXHR, textStatus, errorThrown) => {
+      console.log('FAIL', jqXHR.error);
+      console.log('ERROR THROWN', errorThrown);
     })
     event.preventDefault();
   }
