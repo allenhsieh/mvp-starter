@@ -25,26 +25,51 @@ class App extends React.Component {
     this.state = {
       acc: config.acc,
       pass: config.pass,
-      activeTags: ['city', 'state', 'venue', 'time', 'price', 'fb', 'yt'],
+      // activeTags: ['city', 'state', 'venue', 'time', 'price', 'fb', 'yt'],
+      // activeTags:[
+      //   {city: ''},
+      //   {state: ''},
+      //   {venue: ''},
+      //   {time: ''},
+      //   {price: ''},
+      //   {fb: ''},
+      //   {yt: ''},
+      // ],
+      activeTags:[
+        ['city', ''],
+        ['state', ''],
+        ['venue', ''],
+        ['time', ''],
+        ['price', ''],
+        ['fb', ''],
+        ['yt', ''],
+      ],
       inactiveTags: [],
-      city: '',
-      state: '',
-      venue: '',
-      time: '',
-      price: '',
-      fb: '',
-      yt: '',
+      // tagValues: [{
+      //   city: '',
+      //   state: '',
+      //   venue: '',
+      //   time: '',
+      //   price: '',
+      //   fb: '',
+      //   yt: '',
+      // }],
       q: [],
       url: 'https://archive.org/metadata/allenAPI'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({
-      q: event.target.value
-    });
+  handleChange(event, index) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    console.log('THIS IS EVENT', event);
+    console.log('THIS IS INDEX', index);
+    // this.setState({
+
+    // });
   }
 
   handleSubmit(event) {
@@ -75,12 +100,12 @@ class App extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        {this.state.activeTags.map(tag => {
+        {this.state.activeTags.map((tag, index) => {
           return (
             <TagItem
-              onChange={this.handleChange}
+              onChange={this.handleChange.bind(this, index)}
               name={tag}
-              key={tag}
+              key={index}
             />
           );
         })}
