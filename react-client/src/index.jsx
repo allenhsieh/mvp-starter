@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import {config} from '../../config';
+// import {config} from '../../config';
 // import List from './components/List.jsx';
 
 const TagItem = (props) => {
@@ -20,41 +20,18 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      acc: config.acc,
-      pass: config.pass,
-      // activeTags: ['city', 'state', 'venue', 'time', 'price', 'fb', 'yt'],
-      // activeTags:[
-      //   {city: ''},
-      //   {state: ''},
-      //   {venue: ''},
-      //   {time: ''},
-      //   {price: ''},
-      //   {fb: ''},
-      //   {yt: ''},
-      // ],
       activeTags:[
         ['city', 'hi'],
         ['state', 'test'],
         ['venue', 'testing'],
-        ['time', ''],
-        ['price', ''],
-        ['fb', ''],
-        ['yt', ''],
+        ['time', 'sdgg'],
+        ['price', 'sdgsgs'],
+        ['fb', 'sdggds'],
+        ['yt', 'tw235t4wt'],
       ],
       inactiveTags: [],
-      // tagValues: [{
-      //   city: '',
-      //   state: '',
-      //   venue: '',
-      //   time: '',
-      //   price: '',
-      //   fb: '',
-      //   yt: '',
-      // }],
-      url: 'https://archive.org/metadata/allenAPI'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(index, event) {
@@ -69,36 +46,20 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    let q = [];
+    let query = [];
     this.state.activeTags.forEach(tag => {
-      q.push({
+      query.push({
         add: '/' + tag[0],
         value: tag[1]
       });
     });
-    console.log('Q', q);
-
-    $.post({
-      url: this.state.url,
-      crossDomain: true,
-      dataType: 'jsonp',
-      contentType: 'application/javacript',
-      headers: {
-        'access': this.state.acc,
-        'secret': this.state.pass
-      },
-      data: {
-        '-target': 'metadata',
-        '-patch': JSON.stringify(q)
-      }
+    $.post('/data', {query})
+    .done(response => {
+      console.log('success', response.body);
     })
-    .done((msg) => {
-      console.log('success!', msg);
-    })
-    .fail((jqXHR, textStatus, errorThrown) => {
-      console.log('FAIL', jqXHR.error);
-      console.log('ERROR THROWN', errorThrown);
-    })
+    .fail(err => {
+      console.log('error', err.responseJSON.body);
+    });
     event.preventDefault();
   }
 
