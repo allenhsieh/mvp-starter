@@ -6,16 +6,18 @@ import {config} from '../../config';
 
 const TagItem = (props) => {
   return (
-    <label>
-      {props.name}:
-      <input type="text" />
-    </label>
+    <div>
+      <label>
+        {props.tag[0]}:
+        <input type="text" name={props.tag[0]} value={props.tag[1]} onChange={props.change}/>
+      </label>
+    </div>
   );
 
-  <label>
-  test:
-  <input type="text" value={this.state.q} onChange={this.handleChange} />
-</label>
+//   <label>
+//   test:
+//   <input type="text" value={this.state.q} onChange={this.handleChange} />
+// </label>
 
 }
 
@@ -36,9 +38,9 @@ class App extends React.Component {
       //   {yt: ''},
       // ],
       activeTags:[
-        ['city', ''],
-        ['state', ''],
-        ['venue', ''],
+        ['city', 'hi'],
+        ['state', 'test'],
+        ['venue', 'testing'],
         ['time', ''],
         ['price', ''],
         ['fb', ''],
@@ -61,15 +63,17 @@ class App extends React.Component {
     // this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event, index) {
+  handleChange(index, event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    console.log('THIS IS EVENT', event);
+    console.log('THIS IS EVENT', value);
     console.log('THIS IS INDEX', index);
-    // this.setState({
-
-    // });
+    let newTags = [...this.state.activeTags];
+    newTags[index][1] = value;
+    this.setState({
+      activeTags: newTags
+    });
   }
 
   handleSubmit(event) {
@@ -102,11 +106,11 @@ class App extends React.Component {
       <form onSubmit={this.handleSubmit}>
         {this.state.activeTags.map((tag, index) => {
           return (
-            <TagItem
-              onChange={this.handleChange.bind(this, index)}
-              name={tag}
-              key={index}
-            />
+              <TagItem
+                change={this.handleChange.bind(this, index)}
+                tag={tag}
+                key={index}
+              />
           );
         })}
         <input type="submit" value="Submit" />
