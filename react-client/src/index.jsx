@@ -69,7 +69,6 @@ class App extends React.Component {
   handleAddTag(event) {
     const target = event.target;
     const index = target.getAttribute('data-index');
-    console.log('INDEX', index);
 
     let newInactive = [...this.state.inactiveTags];
     let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
