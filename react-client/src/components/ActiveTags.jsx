@@ -9,6 +9,7 @@ const ActiveTag = (props) => (
               change={props.change}
               tag={tag}
               key={index}
+              index={index}
               removeTag={props.removeTag}
             />
         );

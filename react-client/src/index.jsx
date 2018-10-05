@@ -24,10 +24,10 @@ class App extends React.Component {
     this.handleAddTag = this.handleAddTag.bind(this);
   }
 
-  handleChange(index, event) {
+  handleChange(event) {
     const target = event.target;
     const value = target.value;
-
+    const index = target.getAttribute('data-index');
     let newTags = [...this.state.activeTags];
     newTags[index][1] = value;
     this.setState({
@@ -53,7 +53,9 @@ class App extends React.Component {
     event.preventDefault();
   }
 
-  handleRemoveTag(index) {
+  handleRemoveTag(event) {
+    const target = event.target;
+    const index = target.getAttribute('data-index');
     let newActive = [...this.state.activeTags];
     let newInactive = this.state.inactiveTags.concat(newActive.splice(index, 1));
 
