@@ -12,11 +12,11 @@ db.once('open', function() {
 });
 
 var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+  identifier: String,
+  title: String
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var ArchiveItem = mongoose.model('ArchiveItem', itemSchema);
 
 var selectAll = function(callback) {
   Item.find({}, function(err, items) {
