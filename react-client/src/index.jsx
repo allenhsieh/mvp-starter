@@ -13,6 +13,12 @@ const TagItem = (props) => {
   );
 }
 
+const InactiveTag = (props) => {
+  return (
+    <button type="button">{props.tag[0]}</button>
+  );
+}
+
 class App extends React.Component {
   constructor() {
     super();
@@ -61,13 +67,17 @@ class App extends React.Component {
   }
 
   handleRemoveTag(index, event) {
-    console.log('button clicked! with index', index);
-    let newInactive = [];
-    let newActive = [];
+    // console.log('button clicked! with index', index);
+    let newActive = [...this.state.activeTags];
+    let newInactive = this.state.inactiveTags.concat(newActive.splice(index, 1));
+    console.log('newActive', newActive);
+    console.log('newinActive', newInactive);
 
-    this.setState({
-      activeTags: newActive,
-      inactiveTags: newInactive
+    this.setState(prevState => {
+      return {
+        activeTags: newActive,
+        inactiveTags: newInactive
+      }
     })
   }
 
@@ -85,6 +95,16 @@ class App extends React.Component {
           );
         })}
         <input type="submit" value="Submit"/>
+        <div>
+          {this.state.inactiveTags.map((tag, index) => {
+            return (
+              <InactiveTag
+                tag={tag}
+                key={index}
+              />
+            );
+          })}
+        </div>
       </form>
     )
   }
