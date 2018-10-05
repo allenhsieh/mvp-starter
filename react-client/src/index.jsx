@@ -25,10 +25,10 @@ class App extends React.Component {
     this.handleAddTag = this.handleAddTag.bind(this);
   }
 
-  handleChange(event) {
+  handleChange(event, index) {
     const target = event.target;
     const value = target.value;
-    const index = target.getAttribute('data-index');
+    // const index = target.getAttribute('data-index');
     let newTags = [...this.state.activeTags];
     newTags[index][1] = value;
     this.setState({
@@ -54,9 +54,9 @@ class App extends React.Component {
     event.preventDefault();
   }
 
-  handleRemoveTag(event) {
-    const target = event.target;
-    const index = target.getAttribute('data-index');
+  handleRemoveTag(index) {
+    // const target = event.target;
+    // const index = target.getAttribute('data-index');
     let newActive = [...this.state.activeTags];
     let newInactive = this.state.inactiveTags.concat(newActive.splice(index, 1));
 
@@ -66,9 +66,9 @@ class App extends React.Component {
     })
   }
 
-  handleAddTag(event) {
-    const target = event.target;
-    const index = target.getAttribute('data-index');
+  handleAddTag(index) {
+    // const target = event.target;
+    // const index = target.getAttribute('data-index');
 
     let newInactive = [...this.state.inactiveTags];
     let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
@@ -83,13 +83,13 @@ class App extends React.Component {
     return (
       <div>
         <Form
-          submit={this.handleSubmit}
-          change={this.handleChange}
-          removeTag={this.handleRemoveTag}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          handleRemoveTag={this.handleRemoveTag}
           activeTags={this.state.activeTags}
         />
         <InactiveTags
-          addTag={this.handleAddTag}
+          handleAddTag={this.handleAddTag}
           inactiveTags={this.state.inactiveTags}
         />
       </div>

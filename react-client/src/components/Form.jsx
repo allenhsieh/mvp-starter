@@ -1,11 +1,11 @@
 import React from 'react';
 import ActiveTags from './ActiveTags.jsx';
 
-const Form = ({submit, change, removeTag, activeTags}) => (
-  <form onSubmit={submit}>
+const Form = ({handleSubmit, handleChange, handleRemoveTag, activeTags}) => (
+  <form onSubmit={handleSubmit}>
     <ActiveTags
-      change={change}
-      removeTag={removeTag}
+      handleChange={handleChange}
+      handleRemoveTag={handleRemoveTag}
       activeTags={activeTags}
     />
     <input type="submit" value="Submit" />

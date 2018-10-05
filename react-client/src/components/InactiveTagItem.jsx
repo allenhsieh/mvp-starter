@@ -1,8 +1,8 @@
 import React from 'react';
 
-const InactiveTagItem = ({tag, index, addTag}) => {
+const InactiveTagItem = ({tag, index, handleAddTag}) => {
   return (
-    <button type="button" data-index={index} onClick={addTag}>{tag[0]}</button>
+    <button type="button" onClick={() => handleAddTag(index)}>{tag[0]}</button>
   );
 }
 

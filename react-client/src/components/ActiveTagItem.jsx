@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ActiveTagItem = ({index, change, tag, removeTag}) => (
+const ActiveTagItem = ({index, handleChange, tag, handleRemoveTag}) => (
   <div>
     <label>
-      <button type="button" data-index={index} className="remove-tag" onClick={removeTag}>✖</button>  {tag[0]}:
-      <input type="text"  data-index={index} name={tag[0]} value={tag[1]} onChange={change}/>
+      <button type="button" className="remove-tag" onClick={() => handleRemoveTag(index)}>✖</button>  {tag[0]}:
+      <input type="text" name={tag[0]} value={tag[1]} onChange={(event) => handleChange(event, index)}/>
     </label>
   </div>
 );

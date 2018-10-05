@@ -1,7 +1,7 @@
 import React from 'react';
 import InactiveTagItem from './InactiveTagItem.jsx'
 
-const InactiveTags = ({addTag, inactiveTags}) => (
+const InactiveTags = ({handleAddTag, inactiveTags}) => (
   <div>
     {inactiveTags.map((tag, index) => {
       return (
@@ -9,7 +9,7 @@ const InactiveTags = ({addTag, inactiveTags}) => (
           tag={tag}
           key={index}
           index={index}
-          addTag={addTag}
+          handleAddTag={handleAddTag}
         />
       );
     })}
