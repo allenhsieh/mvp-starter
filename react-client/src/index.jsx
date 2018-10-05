@@ -84,7 +84,10 @@ class App extends React.Component {
           removeTag={this.handleRemoveTag}
           activeTags={this.state.activeTags}
         />
-        {/* <InactiveTags addTag={this.handleAddTag}/> */}
+        <InactiveTags
+          addTag={this.handleAddTag}
+          inactiveTags={this.inactiveTags}
+        />
       </div>
     )
   }
