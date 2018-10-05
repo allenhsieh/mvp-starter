@@ -1,16 +1,16 @@
 import React from 'react';
 import ActiveTagItem from './ActiveTagItem.jsx'
 
-const ActiveTag = (props) => (
+const ActiveTag = ({change, removeTag, activeTags}) => (
   <div>
-      {props.activeTags.map((tag, index) => {
+      {activeTags.map((tag, index) => {
         return (
             <ActiveTagItem
-              change={props.change}
+              change={change}
               tag={tag}
               key={index}
               index={index}
-              removeTag={props.removeTag}
+              removeTag={removeTag}
             />
         );
       })}

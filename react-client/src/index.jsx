@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Form from './components/Form.jsx';
+import InactiveTags from './components/InactiveTags.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -65,7 +66,11 @@ class App extends React.Component {
     })
   }
 
-  handleAddTag(index) {
+  handleAddTag(event) {
+    const target = event.target;
+    const index = target.getAttribute('data-index');
+    console.log('INDEX', index);
+
     let newInactive = [...this.state.inactiveTags];
     let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
 
@@ -86,7 +91,7 @@ class App extends React.Component {
         />
         <InactiveTags
           addTag={this.handleAddTag}
-          inactiveTags={this.inactiveTags}
+          inactiveTags={this.state.inactiveTags}
         />
       </div>
     )

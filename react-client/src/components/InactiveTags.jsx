@@ -1,14 +1,15 @@
 import React from 'react';
 import InactiveTagItem from './InactiveTagItem.jsx'
 
-const InactiveTags = ({}) => (
+const InactiveTags = ({addTag, inactiveTags}) => (
   <div>
-    {this.state.inactiveTags.map((tag, index) => {
+    {inactiveTags.map((tag, index) => {
       return (
         <InactiveTagItem
           tag={tag}
           key={index}
-          addTag={this.handleAddTag.bind(this, index)}
+          index={index}
+          addTag={addTag}
         />
       );
     })}

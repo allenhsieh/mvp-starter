@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ActiveTagItem = (props) => (
+const ActiveTagItem = ({index, change, tag, removeTag}) => (
   <div>
     <label>
-      <button type="button" data-index={props.index} className="remove-tag" onClick={props.removeTag}>✖</button>  {props.tag[0]}:
-      <input type="text"  data-index={props.index} name={props.tag[0]} value={props.tag[1]} onChange={props.change}/>
+      <button type="button" data-index={index} className="remove-tag" onClick={removeTag}>✖</button>  {tag[0]}:
+      <input type="text"  data-index={index} name={tag[0]} value={tag[1]} onChange={change}/>
     </label>
   </div>
 );
