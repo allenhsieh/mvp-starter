@@ -1,23 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-
-const TagItem = (props) => {
-  return (
-    <div>
-      <label>
-        <button type="button" className="remove-tag" onClick={props.removeTag}>✖</button>{props.tag[0]}:
-        <input type="text" name={props.tag[0]} value={props.tag[1]} onChange={props.change}/>
-      </label>
-    </div>
-  );
-}
-
-const InactiveTag = (props) => {
-  return (
-    <button type="button" onClick={props.addTag}>{props.tag[0]}</button>
-  );
-}
+import Form from './components/Form.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -35,6 +19,9 @@ class App extends React.Component {
       inactiveTags: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRemoveTag = this.handleRemoveTag.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
   }
 
   handleChange(index, event) {
@@ -66,7 +53,7 @@ class App extends React.Component {
     event.preventDefault();
   }
 
-  handleRemoveTag(index, event) {
+  handleRemoveTag(index) {
     let newActive = [...this.state.activeTags];
     let newInactive = this.state.inactiveTags.concat(newActive.splice(index, 1));
 
@@ -76,7 +63,7 @@ class App extends React.Component {
     })
   }
 
-  handleAddTag(index, event) {
+  handleAddTag(index) {
     let newInactive = [...this.state.inactiveTags];
     let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
 
@@ -88,30 +75,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        {this.state.activeTags.map((tag, index) => {
-          return (
-              <TagItem
-                change={this.handleChange.bind(this, index)}
-                tag={tag}
-                key={index}
-                removeTag={this.handleRemoveTag.bind(this, index)}
-              />
-          );
-        })}
-        <input type="submit" value="Submit"/>
-        <div>
-          {this.state.inactiveTags.map((tag, index) => {
-            return (
-              <InactiveTag
-                tag={tag}
-                key={index}
-                addTag={this.handleAddTag.bind(this, index)}
-              />
-            );
-          })}
-        </div>
-      </form>
+      <div>
+        <Form
+          submit={this.handleSubmit}
+          change={this.handleChange}
+          removeTag={this.handleRemoveTag}
+          activeTags={this.state.activeTags}
+        />
+        {/* <InactiveTags addTag={this.handleAddTag}/> */}
+      </div>
     )
   }
 }
