@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import {config} from '../../config';
-// import List from './components/List.jsx';
 
 const TagItem = (props) => {
   return (
     <div>
       <label>
-        <button className="remove-tag">✖</button>{props.tag[0]}:
+        <button type="button" className="remove-tag" onClick={props.removeTag}>✖</button>{props.tag[0]}:
         <input type="text" name={props.tag[0]} value={props.tag[1]} onChange={props.change}/>
       </label>
     </div>
   );
-
 }
 
 class App extends React.Component {
@@ -63,6 +60,17 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  handleRemoveTag(index, event) {
+    console.log('button clicked! with index', index);
+    let newInactive = [];
+    let newActive = [];
+
+    this.setState({
+      activeTags: newActive,
+      inactiveTags: newInactive
+    })
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -72,10 +80,11 @@ class App extends React.Component {
                 change={this.handleChange.bind(this, index)}
                 tag={tag}
                 key={index}
+                removeTag={this.handleRemoveTag.bind(this, index)}
               />
           );
         })}
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit"/>
       </form>
     )
   }
