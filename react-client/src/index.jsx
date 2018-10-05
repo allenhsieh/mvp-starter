@@ -15,7 +15,7 @@ const TagItem = (props) => {
 
 const InactiveTag = (props) => {
   return (
-    <button type="button">{props.tag[0]}</button>
+    <button type="button" onClick={props.addTag}>{props.tag[0]}</button>
   );
 }
 
@@ -67,18 +67,23 @@ class App extends React.Component {
   }
 
   handleRemoveTag(index, event) {
-    // console.log('button clicked! with index', index);
     let newActive = [...this.state.activeTags];
     let newInactive = this.state.inactiveTags.concat(newActive.splice(index, 1));
-    console.log('newActive', newActive);
-    console.log('newinActive', newInactive);
 
-    this.setState(prevState => {
-      return {
+    this.setState({
         activeTags: newActive,
         inactiveTags: newInactive
-      }
     })
+  }
+
+  handleAddTag(index, event) {
+    let newInactive = [...this.state.inactiveTags];
+    let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
+
+    this.setState({
+      activeTags: newActive,
+      inactiveTags: newInactive
+    });
   }
 
   render() {
@@ -101,6 +106,7 @@ class App extends React.Component {
               <InactiveTag
                 tag={tag}
                 key={index}
+                addTag={this.handleAddTag.bind(this, index)}
               />
             );
           })}
