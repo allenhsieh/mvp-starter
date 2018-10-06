@@ -5,7 +5,7 @@ const SearchResults = ({searchResults}) => (
   <form>
     {searchResults.map(item => {
       return (
-        <SearchResultItem item={item} />
+        <SearchResultItem item={item} key={item.identifier}/>
       )
     })}
   </form>

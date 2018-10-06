@@ -40,17 +40,6 @@ class App extends React.Component {
   handleSearchSubmit(event) {
     $.post('/search', {q: this.state.query})
     .done(({results}) => {
-      // let tests = results.map(item => {
-      //   item.checked = false;
-      //   console.log('ITEM', item);
-      //   return item;
-      //   }
-      // );
-      console.log(results);
-      console.log('THIS?', results.map(item => {
-        item.checked = false
-        return item
-      }));
       this.setState({
         searchResults: results.map(item => {
           item.checked = false;
@@ -116,13 +105,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Search
-          query={this.state.query}
-          endpoints={this.state.endpoints}
-          searchResults={this.state.searchResults}
-          handleSearchInput={this.handleSearchInput}
-          handleSearchSubmit={this.handleSearchSubmit}
-        />
         <Form
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
@@ -132,6 +114,13 @@ class App extends React.Component {
         <InactiveTags
           handleAddTag={this.handleAddTag}
           inactiveTags={this.state.inactiveTags}
+        />
+        <Search
+          query={this.state.query}
+          endpoints={this.state.endpoints}
+          searchResults={this.state.searchResults}
+          handleSearchInput={this.handleSearchInput}
+          handleSearchSubmit={this.handleSearchSubmit}
         />
       </div>
     )
