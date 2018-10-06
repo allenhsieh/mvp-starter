@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Form from './components/Form.jsx';
 import InactiveTags from './components/InactiveTags.jsx';
-import styled from 'styled-components';
+import Search from './components/Search.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -19,17 +19,26 @@ class App extends React.Component {
         ['yt', 'tw235t4wt'],
       ],
       inactiveTags: [],
+      query: '',
+      endpoints: [],
+      searchResults: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
+    this.handleSearchInput = this.handleSearchInput.bind(this);
+  }
+
+  handleSearchInput(event) {
+    this.setState({
+      query: event.target.value
+    })
   }
 
   handleChange(event, index) {
     const target = event.target;
     const value = target.value;
-    // const index = target.getAttribute('data-index');
     let newTags = [...this.state.activeTags];
     newTags[index][1] = value;
     this.setState({
@@ -83,6 +92,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Search
+          query={this.state.query}
+          endpoints={this.state.endpoints}
+          searchResults={this.state.searchResults}
+          handleSearchInput={this.handleSearchInput}
+        />
         <Form
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}

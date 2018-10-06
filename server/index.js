@@ -56,9 +56,8 @@ app.get('/updateDB', (req, res) => {
     json: true,
   }
   request(options, (err, response, body) => {
-    // let parsedJSON = JSON.parse(body)
     db.updateDB(body.response.docs, (item) => {
-      res.status(200).send(item);
+      res.send('Database updated');
     });
   })
 });
