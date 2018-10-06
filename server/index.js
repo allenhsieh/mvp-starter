@@ -2,10 +2,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var config = require('../config');
+var updateUrl = 'https://archive.org/advancedsearch.php?q=allenh100%40gmail.com&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=addeddate+desc&sort%5B%5D=&sort%5B%5D=&rows=9999&page=1&output=json';
+
+
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var items = require('../database-mysql');
-// var items = require('../database-mongo');
+var db = require('../database-mongo');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,14 +46,22 @@ app.post('/data', (req, res) => {
     json: true
   }
   request.post(options, (error, response, body) => {
-    // console.log('BODY', response);
-    // if (!body.success) {
-    //   res.status(400).send(error);
-    // } else {
-      res.status(response.statusCode).send(response);
-    // }
+    res.status(response.statusCode).send(response);
   });
 })
+
+app.get('/updateDB', (req, res) => {
+  let options= {
+    url: updateUrl,
+    json: true,
+  }
+  request(options, (err, response, body) => {
+    // let parsedJSON = JSON.parse(body)
+    db.updateDB(body.response.docs, (item) => {
+      res.status(200).send(item);
+    });
+  })
+});
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
