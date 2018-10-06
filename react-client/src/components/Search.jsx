@@ -9,7 +9,7 @@ const SearchWrapper = styled.div`
   vertical-align: top;
 `;
 
-const Search = ({query, handleSearchInput, handleSearchSubmit, searchResults}) => (
+const Search = ({query, handleSearchInput, handleSearchSubmit, searchResults, handleCheck}) => (
   <SearchWrapper>
   <div>
     <SearchBar
@@ -19,6 +19,7 @@ const Search = ({query, handleSearchInput, handleSearchSubmit, searchResults}) =
     />
     <SearchResults
       searchResults={searchResults}
+      handleCheck={handleCheck}
     />
   </div>
   </SearchWrapper>

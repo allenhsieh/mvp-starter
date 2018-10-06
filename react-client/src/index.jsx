@@ -29,6 +29,7 @@ class App extends React.Component {
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSearchInput = this.handleSearchInput.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   handleSearchInput(event) {
@@ -48,6 +49,14 @@ class App extends React.Component {
       });
     });
     event.preventDefault();
+  }
+
+  handleCheck(event, index) {
+    let newSearchResults = [...this.state.searchResults];
+    newSearchResults[index]['checked'] = event.target.checked;
+    this.setState({
+      searchResults: newSearchResults
+    })
   }
 
   handleChange(event, index) {
@@ -121,6 +130,7 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
           handleSearchInput={this.handleSearchInput}
           handleSearchSubmit={this.handleSearchSubmit}
+          handleCheck={this.handleCheck}
         />
       </div>
     )
