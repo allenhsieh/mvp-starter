@@ -4,8 +4,6 @@ var request = require('request');
 var config = require('../config');
 var updateUrl = 'https://archive.org/advancedsearch.php?q=allenh100%40gmail.com&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=addeddate+desc&sort%5B%5D=&sort%5B%5D=&rows=9999&page=1&output=json';
 
-
-
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var items = require('../database-mysql');
 var db = require('../database-mongo');
@@ -31,10 +29,6 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 // });
 
 app.post('/data', (req, res) => {
-  console.log('REQ', JSON.stringify(req.body.query));
-  // console.log('REQ BODY', JSON.parse(req.body));
-  // console.log('CONFIG', config.acc, config.pass);
-  // res.sendStatus(200);
   let options = {
     url: 'https://archive.org/metadata/allenAPI',
     form: {
@@ -49,6 +43,13 @@ app.post('/data', (req, res) => {
     res.status(response.statusCode).send(response);
   });
 })
+
+app.post('/search', (req, res) => {
+  db.search(req.body.q, (results) => {
+    console.log('these are results', results);
+    res.json(results);
+  });
+});
 
 app.get('/updateDB', (req, res) => {
   let options= {

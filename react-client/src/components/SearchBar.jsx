@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SearchBar = ({handleSearchInput, query}) => (
-  <form>
+const SearchBar = ({handleSearchSubmit, handleSearchInput, query}) => (
+  <form onSubmit={handleSearchSubmit}>
     <label>
       Search:
       <input type="text" value={query} onChange={handleSearchInput} />

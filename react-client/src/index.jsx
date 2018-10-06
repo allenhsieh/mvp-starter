@@ -28,12 +28,22 @@ class App extends React.Component {
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSearchInput = this.handleSearchInput.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
   handleSearchInput(event) {
     this.setState({
       query: event.target.value
     })
+  }
+
+  handleSearchSubmit(event) {
+    console.log('submitted', this.state.query);
+    $.post('/search', {q: this.state.query})
+    .done((results) => {
+      console.log(results);
+    })
+    event.preventDefault();
   }
 
   handleChange(event, index) {
@@ -97,6 +107,7 @@ class App extends React.Component {
           endpoints={this.state.endpoints}
           searchResults={this.state.searchResults}
           handleSearchInput={this.handleSearchInput}
+          handleSearchSubmit={this.handleSearchSubmit}
         />
         <Form
           handleSubmit={this.handleSubmit}
