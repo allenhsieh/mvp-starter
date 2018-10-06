@@ -28,12 +28,10 @@ var ArchiveItem = mongoose.model('ArchiveItem', itemSchema);
 //   });
 // };
 const search = (query, callback) => {
-  console.log('this is search query', new RegExp(query, 'i'));
   ArchiveItem
   .find({title: new RegExp(query, 'i')})
   .then(results => {
-    console.log('these are results inside search', results)
-    callback([results]);
+    callback(results);
   });
 }
 

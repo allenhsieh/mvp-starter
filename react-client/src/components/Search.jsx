@@ -1,6 +1,8 @@
 import React from 'react';
 import SearchBar from './SearchBar.jsx';
-// import SearchResults from './SearchResults.jsx';
+import SearchResults from './SearchResults.jsx';
+import styled from 'styled-components';
+
 
 const Search = ({query, handleSearchInput, handleSearchSubmit, searchResults}) => (
   <div>
@@ -9,9 +11,9 @@ const Search = ({query, handleSearchInput, handleSearchSubmit, searchResults}) =
       handleSearchInput={handleSearchInput}
       handleSearchSubmit={handleSearchSubmit}
     />
-    {/* <SearchResults
+    <SearchResults
       searchResults={searchResults}
-    /> */}
+    />
   </div>
 );
 

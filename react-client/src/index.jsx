@@ -38,11 +38,26 @@ class App extends React.Component {
   }
 
   handleSearchSubmit(event) {
-    console.log('submitted', this.state.query);
     $.post('/search', {q: this.state.query})
-    .done((results) => {
+    .done(({results}) => {
+      // let tests = results.map(item => {
+      //   item.checked = false;
+      //   console.log('ITEM', item);
+      //   return item;
+      //   }
+      // );
       console.log(results);
-    })
+      console.log('THIS?', results.map(item => {
+        item.checked = false
+        return item
+      }));
+      this.setState({
+        searchResults: results.map(item => {
+          item.checked = false;
+          return item
+        })
+      });
+    });
     event.preventDefault();
   }
 
@@ -89,7 +104,6 @@ class App extends React.Component {
   handleAddTag(index) {
     // const target = event.target;
     // const index = target.getAttribute('data-index');
-
     let newInactive = [...this.state.inactiveTags];
     let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
 

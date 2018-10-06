@@ -46,8 +46,7 @@ app.post('/data', (req, res) => {
 
 app.post('/search', (req, res) => {
   db.search(req.body.q, (results) => {
-    console.log('these are results', results);
-    res.json(results);
+    res.json({results});
   });
 });
 

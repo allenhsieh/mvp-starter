@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const InactiveWrapper = styled.div`
   display: inline-block;
-  margin-left: 10%;
+  margin-left: 5%;
   vertical-align: top;
 `;
 
