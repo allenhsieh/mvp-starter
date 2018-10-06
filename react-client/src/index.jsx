@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Form from './components/Form.jsx';
 import InactiveTags from './components/InactiveTags.jsx';
+import styled from 'styled-components';
 
 class App extends React.Component {
   constructor() {
