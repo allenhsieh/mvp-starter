@@ -54,8 +54,15 @@ class App extends React.Component {
   handleCheck(event, index) {
     let newSearchResults = [...this.state.searchResults];
     newSearchResults[index]['checked'] = event.target.checked;
+    let newEndpoints = newSearchResults.reduce((accumulator, currentItem) => {
+      if (currentItem.checked) {
+        return accumulator.concat(currentItem.identifier)
+      }
+      return accumulator;
+    }, []);
     this.setState({
-      searchResults: newSearchResults
+      searchResults: newSearchResults,
+      endpoints: newEndpoints
     })
   }
 
@@ -77,7 +84,7 @@ class App extends React.Component {
         value: tag[1]
       });
     });
-    $.post('/data', {query})
+    $.post('/data', {endpoints: this.state.endpoints, query: query})
     .done(response => {
       console.log('success', response.body);
     })
