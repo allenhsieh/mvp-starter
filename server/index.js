@@ -14,10 +14,6 @@ app.use(bodyParser.json());
 // UNCOMMENT FOR REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-// UNCOMMENT FOR ANGULAR
-// app.use(express.static(__dirname + '/../angular-client'));
-// app.use(express.static(__dirname + '/../node_modules'));
-
 // app.get('/items', function (req, res) {
 //   items.selectAll(function(err, data) {
 //     if(err) {
@@ -29,19 +25,26 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 // });
 
 app.post('/data', (req, res) => {
-  let options = {
-    url: 'https://archive.org/metadata/allenAPI',
-    form: {
-      '-target': 'metadata',
-      '-patch': JSON.stringify(req.body.query),
-      'access': config.acc,
-      'secret': config.pass
-    },
-    json: true
-  }
-  request.post(options, (error, response, body) => {
-    res.status(response.statusCode).send(response);
+  const archiveURL = 'https://archive.org/metadata/';
+  let log = [];
+  req.body.endpoints.forEach(endpoint => {
+    let options = {
+      url: archiveURL + endpoint,
+      form: {
+        '-target': 'metadata',
+        '-patch': JSON.stringify(req.body.query),
+        'access': config.acc,
+        'secret': config.pass
+      },
+      json: true
+    }
+    request.post(options, (error, response, body) => {
+      // res.status(response.statusCode).send(response);
+      log.push(response);
+    });
   });
+  console.log('LOG', log);
+  res.status(200).send(log);
 })
 
 app.post('/search', (req, res) => {

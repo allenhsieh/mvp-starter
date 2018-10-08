@@ -10,12 +10,13 @@ class App extends React.Component {
     super();
     this.state = {
       activeTags:[
+        ['band', 'band'],
         ['city', 'hi'],
         ['state', 'test'],
         ['venue', 'testing'],
         ['time', 'sdgg'],
         ['price', 'sdgsgs'],
-        ['fb', 'sdggds'],
+        ['event', 'sdggds'],
         ['yt', 'tw235t4wt'],
       ],
       inactiveTags: [],
