@@ -26,16 +26,18 @@ const search = (query, callback) => {
   });
 }
 
+
 const updateDB = (items, callback) => {
-  db.db.dropDatabase((err) => {
+  db.dropDatabase((err) => {
     if (err) { console.log('ERR', err) };
     console.log('dropped');
+    items.forEach(item => {
+      new ArchiveItem({identifier: item['identifier'], title: item['title']})
+      .save();
+    });
+    callback('Database Updated');
   });
-  items.forEach(item => {
-    new ArchiveItem({identifier: item['identifier'], title: item['title']})
-    .save();
-  });
-  callback('Database Updated');
+
 }
 
 module.exports.updateDB = updateDB;

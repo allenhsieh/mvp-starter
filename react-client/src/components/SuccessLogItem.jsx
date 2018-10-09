@@ -7,12 +7,12 @@ const SuccessWrapper = styled.div`
   border: 1px solid black;
 `;
 
-const SuccessLogItem = ({item}) => (
+const SuccessLogItem = ({item: {identifier, log}}) => (
   <SuccessWrapper>
     <div>
       <b>Success!</b><br />
-      <b>Identifier: </b> {item.identifier} <br />
-      <b>Log: </b> <a href={item.log}>Click here for log</a>
+      <b>Identifier: </b> <a href={'https://archive.org/details/' + identifier}>{identifier}</a> <br />
+      <b>Log: </b> <a href={log}>Click here for log</a>
     </div>
   </SuccessWrapper>
 )

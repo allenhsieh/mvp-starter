@@ -7,11 +7,11 @@ const ItemWrapper = styled.div`
   border: 1px solid red;
 `;
 
-const ErrorLogItem = ({item}) => (
+const ErrorLogItem = ({item: {identifier, error}}) => (
   <ItemWrapper>
     <div>
-      <b style={{color: 'red'}}>Error: </b> {item.error}<br />
-      <b>Identifier: </b> {item.identifier}
+      <b style={{color: 'red'}}>Error: </b> {error}<br />
+      <b>Identifier: </b> <a href={'https://archive.org/details/' + identifier}>{identifier}</a> <br />
     </div>
   </ItemWrapper>
 )

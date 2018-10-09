@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const SearchWrapper = styled.div`
   display: inline-block;
-  margin-left: 2.5%;
+  margin-left: 25px;
   vertical-align: top;
 `;
 
