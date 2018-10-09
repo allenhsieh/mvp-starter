@@ -42,7 +42,7 @@ app.post('/data', (req, res) => {
   });
 
   Promise.all(log).then(logArray=> {
-    console.log('LOGDAWG', logArray)
+    console.log('LOG ARRAY', logArray)
     res.status(200).send(logArray);
   });
 });
@@ -59,8 +59,9 @@ app.get('/updateDB', (req, res) => {
     json: true,
   }
   request(options, (err, response, body) => {
-    db.updateDB(body.response.docs, (item) => {
-      res.send('Database updated');
+    db.updateDB(body.response.docs, (msg) => {
+      console.log('SERVER MSG', msg);
+      res.status(200).send(msg);
     });
   })
 });

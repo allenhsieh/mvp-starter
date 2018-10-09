@@ -18,15 +18,6 @@ var itemSchema = mongoose.Schema({
 
 var ArchiveItem = mongoose.model('ArchiveItem', itemSchema);
 
-// var selectAll = function(callback) {
-//   Item.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
 const search = (query, callback) => {
   ArchiveItem
   .find({title: new RegExp(query, 'i')})
@@ -34,7 +25,6 @@ const search = (query, callback) => {
     callback(results);
   });
 }
-
 
 const updateDB = (items, callback) => {
   db.db.dropDatabase((err) => {

@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Form from './components/Form.jsx';
 import InactiveTags from './components/InactiveTags.jsx';
 import Search from './components/Search.jsx';
+import StatusLogs from './components/StatusLogs.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ class App extends React.Component {
         ['band', 'band'],
         ['city', 'hi'],
         ['state', 'test'],
+        ['country', 'USA'],
         ['venue', 'testing'],
         ['time', 'sdgg'],
         ['price', 'sdgsgs'],
@@ -22,7 +24,8 @@ class App extends React.Component {
       inactiveTags: [],
       query: '',
       endpoints: [],
-      searchResults: []
+      searchResults: [],
+      responseLog: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -87,7 +90,9 @@ class App extends React.Component {
     });
     $.post('/data', {endpoints: this.state.endpoints, query: query})
     .done(response => {
-      console.log('success', response);
+      this.setState({
+        responseLog: response
+      })
     })
     .fail(err => {
       console.log('error', err);
@@ -120,6 +125,11 @@ class App extends React.Component {
   }
 
   render() {
+    let status;
+    if (this.state.responseLog.length > 0) {
+      status = <StatusLogs log={this.state.responseLog} />
+    }
+
     return (
       <div>
         <InactiveTags
@@ -141,7 +151,7 @@ class App extends React.Component {
           handleCheck={this.handleCheck}
         />
         <div>
-
+          {status}
         </div>
       </div>
     )
