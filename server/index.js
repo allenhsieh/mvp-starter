@@ -29,15 +29,21 @@ app.post('/data', (req, res) => {
       },
       json: true
     }
-    return rp.post(options).catch(err => err.error);
+    return rp
+    .post(options)
+    .then(res => {
+      res.identifier = endpoint;
+      return res;
+    })
+    .catch(err => {
+      err.error.identifier = endpoint;
+      return err.error;
+    });
   });
 
-  Promise.all(log).then(log=> {
-    console.log('LOGDAWG', log)
-    res.status(200).send(log);
-  }).catch(err => {
-    console.log(err);
-    res.status(200).send(err);
+  Promise.all(log).then(logArray=> {
+    console.log('LOGDAWG', logArray)
+    res.status(200).send(logArray);
   });
 });
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const FormWrapper = styled.div`
   display: inline-block;
-  margin-left: 10%;
+  margin-left: 2.5%;
   vertical-align: top;
 `;
 

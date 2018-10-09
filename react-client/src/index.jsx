@@ -122,15 +122,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <InactiveTags
+          handleAddTag={this.handleAddTag}
+          inactiveTags={this.state.inactiveTags}
+        />
         <Form
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           handleRemoveTag={this.handleRemoveTag}
           activeTags={this.state.activeTags}
-        />
-        <InactiveTags
-          handleAddTag={this.handleAddTag}
-          inactiveTags={this.state.inactiveTags}
         />
         <Search
           query={this.state.query}
@@ -140,6 +140,9 @@ class App extends React.Component {
           handleSearchSubmit={this.handleSearchSubmit}
           handleCheck={this.handleCheck}
         />
+        <div>
+
+        </div>
       </div>
     )
   }
