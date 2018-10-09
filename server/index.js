@@ -4,6 +4,10 @@ var request = require('request');
 var config = require('../config');
 var updateUrl = 'https://archive.org/advancedsearch.php?q=allenh100%40gmail.com&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=addeddate+desc&sort%5B%5D=&sort%5B%5D=&rows=9999&page=1&output=json';
 var rp = require('request-promise-native');
+var axios = require('axios');
+var util = require('util');
+var requestAsync = util.promisify(request);
+
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var items = require('../database-mysql');
 var db = require('../database-mongo');
@@ -16,48 +20,25 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.post('/data', (req, res) => {
   const archiveURL = 'https://archive.org/metadata/';
-  let log = [];
-
-  function wrapper (array) {
-    return new Promise((resolve, reject) => {
-      array.forEach( (endpoint, index) => {
-       let options = {
-         url: archiveURL + endpoint,
-         form: {
-           '-target': 'metadata',
-           '-patch': JSON.stringify(req.body.query),
-           'access': config.acc,
-           'secret': config.pass
-         },
-         json: true
-       }
-       rp.post(options).then(response => {
-        //  console.log('HI!', response);
-        log.push(response);
-        // return Promise.resolve();
-      }).then(()=> {
-        if (index === array.length - 1) {
-          resolve(log);
-        }
-      })
-      .catch(err => {
-        log.push(err.error);
-        //  reject(err);
-        // return Promise.resolve();
-       }).then(()=> {
-         if (index === array.length - 1) {
-           resolve(log);
-         }
-       });
-     });
-    })
-
-  }
-  wrapper(req.body.endpoints).then(logArr => {
-    console.log('LOGARR', logArr)
-    res.status(200).send(logArr);
+  const log = req.body.endpoints.map( endpoint => {
+    let options = {
+      url: archiveURL + endpoint,
+      form: {
+        '-target': 'metadata',
+        '-patch': JSON.stringify(req.body.query),
+        'access': config.acc,
+        'secret': config.pass
+      },
+      json: true
+    }
+    return rp.post(options);
+  });
+  Promise.all(log).then(log=> {
+    console.log('LOGDAWG', log)
+    res.status(200).send(log);
   }).catch(err => {
-    res.status(400).send(err);
+    console.log(err);
+    res.status(200).send(err);
   });
 });
 
