@@ -4,7 +4,6 @@ var request = require('request');
 var config = require('../config');
 var updateUrl = 'https://archive.org/advancedsearch.php?q=allenh100%40gmail.com&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=addeddate+desc&sort%5B%5D=&sort%5B%5D=&rows=9999&page=1&output=json';
 var rp = require('request-promise-native');
-var axios = require('axios');
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var items = require('../database-mysql');
@@ -58,9 +57,14 @@ app.get('/updateDB', (req, res) => {
     url: updateUrl,
     json: true,
   }
-  request(options, (err, response, body) => {
-    db.updateDB(body.response.docs, (msg) => {
-      console.log('SERVER MSG', msg);
+  // request(options, (err, response, body) => {
+  //   db.updateDB(body.response.docs, (msg) => {
+  //     res.status(200).send(msg);
+  //   });
+  // })
+  rp(options)
+  .then(jsonResponse => {
+    db.updateDB(jsonResponse.response.docs, (msg) => {
       res.status(200).send(msg);
     });
   })

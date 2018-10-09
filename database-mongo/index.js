@@ -30,7 +30,7 @@ const search = (query, callback) => {
 const updateDB = (items, callback) => {
   db.dropDatabase((err) => {
     if (err) { console.log('ERR', err) };
-    console.log('dropped');
+    console.log('Dropped DB');
     items.forEach(item => {
       new ArchiveItem({identifier: item['identifier'], title: item['title']})
       .save();
