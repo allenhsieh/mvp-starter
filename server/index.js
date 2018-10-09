@@ -5,8 +5,6 @@ var config = require('../config');
 var updateUrl = 'https://archive.org/advancedsearch.php?q=allenh100%40gmail.com&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=addeddate+desc&sort%5B%5D=&sort%5B%5D=&rows=9999&page=1&output=json';
 var rp = require('request-promise-native');
 var axios = require('axios');
-var util = require('util');
-var requestAsync = util.promisify(request);
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var items = require('../database-mysql');
@@ -20,26 +18,43 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.post('/data', (req, res) => {
   const archiveURL = 'https://archive.org/metadata/';
-  const log = req.body.endpoints.map( endpoint => {
+  let axiosArray = [];
+  let log = [];
+  req.body.endpoints.forEach( endpoint => {
+    let url4real = archiveURL + endpoint
+    console.log('req.body', url4real);
+
     let options = {
-      url: archiveURL + endpoint,
-      form: {
+      // url: archiveURL + endpoint,
+      data: {
         '-target': 'metadata',
         '-patch': JSON.stringify(req.body.query),
         'access': config.acc,
         'secret': config.pass
       },
-      json: true
     }
-    return rp.post(options);
+    let newPromise = axios.post(url4real, options);
+    axiosArray.push(newPromise);
   });
-  Promise.all(log).then(log=> {
-    console.log('LOGDAWG', log)
-    res.status(200).send(log);
-  }).catch(err => {
-    console.log(err);
-    res.status(200).send(err);
-  });
+
+  axios.all(axiosArray)
+  .then(axios.spread((...responses) => {
+    responses.forEach(res => {
+      log.push(res);
+      console.log('axios post all', res);
+    })
+  }))
+  .catch(error => {
+    console.log('error caught', error);
+    log.push(error);
+    return error;
+  })
+  .then(err => {
+    console.log('pushing err');
+    log.push(err);
+  })
+  console.log('LAWG', log);
+  res.status(200).send(log);
 });
 
 app.post('/search', (req, res) => {
