@@ -87,10 +87,10 @@ class App extends React.Component {
     });
     $.post('/data', {endpoints: this.state.endpoints, query: query})
     .done(response => {
-      console.log('success', response.body);
+      console.log('success', response);
     })
     .fail(err => {
-      console.log('error', err.responseJSON.body);
+      console.log('error', err);
     });
     event.preventDefault();
   }
