@@ -18,43 +18,27 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.post('/data', (req, res) => {
   const archiveURL = 'https://archive.org/metadata/';
-  let axiosArray = [];
-  let log = [];
-  req.body.endpoints.forEach( endpoint => {
-    let url4real = archiveURL + endpoint
-    console.log('req.body', url4real);
-
+  const log = req.body.endpoints.map( endpoint => {
     let options = {
-      // url: archiveURL + endpoint,
-      data: {
+      url: archiveURL + endpoint,
+      form: {
         '-target': 'metadata',
         '-patch': JSON.stringify(req.body.query),
         'access': config.acc,
         'secret': config.pass
       },
+      json: true
     }
-    let newPromise = axios.post(url4real, options);
-    axiosArray.push(newPromise);
+    return rp.post(options).catch(err => err.error);
   });
 
-  axios.all(axiosArray)
-  .then(axios.spread((...responses) => {
-    responses.forEach(res => {
-      log.push(res);
-      console.log('axios post all', res);
-    })
-  }))
-  .catch(error => {
-    console.log('error caught', error);
-    log.push(error);
-    return error;
-  })
-  .then(err => {
-    console.log('pushing err');
-    log.push(err);
-  })
-  console.log('LAWG', log);
-  res.status(200).send(log);
+  Promise.all(log).then(log=> {
+    console.log('LOGDAWG', log)
+    res.status(200).send(log);
+  }).catch(err => {
+    console.log(err);
+    res.status(200).send(err);
+  });
 });
 
 app.post('/search', (req, res) => {
