@@ -5,18 +5,18 @@ const LabelWrapper = styled.div`
   padding-top: 10px
 `;
 
-const SearchResultItem = ({item, index, handleCheck}) => (
+const SearchResultItem = ({item: {identifier, checked, title}, index, handleCheck}) => (
   <LabelWrapper>
   <div>
     <label>
       <input
-        name={item.identifier}
+        name={identifier}
         type="checkbox"
-        checked={item.checked}
+        checked={checked}
         onChange={(event) => handleCheck(event, index)}
       />
-      <b>Identifier: </b> {item.identifier}<br/>
-      <b>Title: </b> {item.title}
+      <b>Identifier: </b> {identifier}<br/>
+      <b>Title: </b> {title}
     </label>
   </div>
   </LabelWrapper>

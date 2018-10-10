@@ -34,6 +34,7 @@ class App extends React.Component {
     this.handleSearchInput = this.handleSearchInput.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.handleSelectAll = this.handleSelectAll.bind(this);
   }
 
   handleSearchInput(event) {
@@ -43,15 +44,22 @@ class App extends React.Component {
   }
 
   handleSearchSubmit(event) {
-    $.post('/search', {q: this.state.query})
-    .done(({results}) => {
+    if (!this.state.query) {
       this.setState({
-        searchResults: results.map(item => {
-          item.checked = false;
-          return item
-        })
+        searchResults: []
       });
-    });
+    } else {
+      $.post('/search', {q: this.state.query})
+      .done(({results}) => {
+        this.setState({
+          searchResults: results.map(item => {
+            item.checked = false;
+            return item
+          }),
+          query: ''
+        });
+      });
+    }
     event.preventDefault();
   }
 
@@ -67,6 +75,24 @@ class App extends React.Component {
     this.setState({
       searchResults: newSearchResults,
       endpoints: newEndpoints
+    })
+  }
+
+  handleSelectAll(event) {
+    let selectAllSearch = this.state.searchResults.map(item => {
+      item.checked = event.target.checked;
+      return item;
+    })
+    let addAllEndpoints = selectAllSearch.reduce((accumulator, currentItem) => {
+      if (currentItem.checked) {
+        return accumulator.concat(currentItem.identifier)
+      }
+      return accumulator;
+    }, []);
+
+    this.setState({
+      searchResults: selectAllSearch,
+      endpoints: addAllEndpoints
     })
   }
 
@@ -101,8 +127,6 @@ class App extends React.Component {
   }
 
   handleRemoveTag(index) {
-    // const target = event.target;
-    // const index = target.getAttribute('data-index');
     let newActive = [...this.state.activeTags];
     let newInactive = this.state.inactiveTags.concat(newActive.splice(index, 1));
 
@@ -113,8 +137,6 @@ class App extends React.Component {
   }
 
   handleAddTag(index) {
-    // const target = event.target;
-    // const index = target.getAttribute('data-index');
     let newInactive = [...this.state.inactiveTags];
     let newActive = this.state.activeTags.concat(newInactive.splice(index, 1));
 
@@ -149,6 +171,7 @@ class App extends React.Component {
           handleSearchInput={this.handleSearchInput}
           handleSearchSubmit={this.handleSearchSubmit}
           handleCheck={this.handleCheck}
+          handleSelectAll={this.handleSelectAll}
         />
         <div>
           {status}
