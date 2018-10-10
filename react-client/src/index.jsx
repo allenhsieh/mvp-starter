@@ -46,7 +46,8 @@ class App extends React.Component {
   handleSearchSubmit(event) {
     if (!this.state.query) {
       this.setState({
-        searchResults: []
+        searchResults: [],
+        responseLog: []
       });
     } else {
       $.post('/search', {q: this.state.query})
