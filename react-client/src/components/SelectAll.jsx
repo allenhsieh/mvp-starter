@@ -2,6 +2,7 @@ import React from 'react';
 
 const SelectAll = ({handleSelectAll}) => (
   <form>
+    <br />
     <label>
       <input
         name="selectAll"
