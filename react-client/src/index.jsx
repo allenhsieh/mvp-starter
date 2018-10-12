@@ -48,7 +48,8 @@ class App extends React.Component {
     if (!this.state.query) {
       this.setState({
         searchResults: [],
-        responseLog: []
+        responseLog: [],
+        endpoints: []
       });
     } else {
       $.post('/search', {q: this.state.query})
