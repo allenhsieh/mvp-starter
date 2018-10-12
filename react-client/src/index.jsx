@@ -11,17 +11,18 @@ class App extends React.Component {
     super();
     this.state = {
       activeTags:[
-        ['band', 'band'],
-        ['city', 'hi'],
-        ['state', 'test'],
+        ['city', ''],
+        ['state', ''],
         ['country', 'USA'],
-        ['venue', 'testing'],
-        ['time', 'sdgg'],
-        ['price', 'sdgsgs'],
-        ['event', 'sdggds'],
-        ['yt', 'tw235t4wt'],
+        ['venue', ''],
       ],
-      inactiveTags: [],
+      inactiveTags: [
+        ['band', ''],
+        ['time', ''],
+        ['price', ''],
+        ['event', ''],
+        ['yt', '']
+      ],
       query: '',
       endpoints: [],
       searchResults: [],
