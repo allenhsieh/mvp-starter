@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var config = require('../config');
-var updateUrl = 'https://archive.org/advancedsearch.php?q=allenh100%40gmail.com&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=addeddate+desc&sort%5B%5D=&sort%5B%5D=&rows=9999&page=1&output=json';
 var rp = require('request-promise-native');
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
@@ -54,7 +53,7 @@ app.post('/search', (req, res) => {
 
 app.get('/updateDB', (req, res) => {
   let options= {
-    url: updateUrl,
+    url: config.updateURL,
     json: true,
   }
   // request(options, (err, response, body) => {
@@ -62,12 +61,13 @@ app.get('/updateDB', (req, res) => {
   //     res.status(200).send(msg);
   //   });
   // })
+  // console.log('CONFIG UPDATE URL', config.updateURL);
   rp(options)
   .then(jsonResponse => {
     db.updateDB(jsonResponse.response.docs, (msg) => {
       res.status(200).send(msg);
     });
-  })
+  });
 });
 
 app.listen(3000, function() {
