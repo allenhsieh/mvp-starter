@@ -27,6 +27,7 @@ app.post('/data', (req, res) => {
       },
       json: true
     }
+
     return rp
     .post(options)
     .then(res => {
@@ -56,12 +57,7 @@ app.get('/updateDB', (req, res) => {
     url: config.updateURL,
     json: true,
   }
-  // request(options, (err, response, body) => {
-  //   db.updateDB(body.response.docs, (msg) => {
-  //     res.status(200).send(msg);
-  //   });
-  // })
-  // console.log('CONFIG UPDATE URL', config.updateURL);
+
   rp(options)
   .then(jsonResponse => {
     db.updateDB(jsonResponse.response.docs, (msg) => {
